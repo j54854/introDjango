@@ -1,0 +1,18 @@
+<h1>Hi {{ user|title }}! {{ question.question_text }}</h1>
+
+{{ form.non_field_errors }}
+
+<form action="{% url 'polls:detail' question.id %}" method="post">
+{% csrf_token %}
+<p>
+    {{ form.your_choice.label }}<br>
+    {{ form.your_choice }}
+</p>
+<p>
+    {{ form.new_option.label }}<br>
+    {{ form.new_option }}
+</p>
+<input type="submit" value="Vote" />
+</form>
+
+<p>or <a href= "{% url 'polls:logout' %}">Logout</a></p>
