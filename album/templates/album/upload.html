@@ -1,0 +1,7 @@
+<h1>Please Upload</h1>
+
+<form enctype="multipart/form-data" action="{% url 'album:upload' %}" method="post">
+{% csrf_token %}
+{{form.as_p}}
+<input type="submit" value="Upload">
+</form>

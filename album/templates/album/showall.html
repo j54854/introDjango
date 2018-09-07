@@ -1,0 +1,8 @@
+<h1>Your Album</h1>
+
+{% for image in images %}
+    <img src='{{ MEDIA_URL }}{{image.picture}}' width=200>
+    <h2>{{ image.title }}</h2>
+{% endfor %}
+
+<h2><a href="{% url 'album:upload' %}">Upload more</a></h2>

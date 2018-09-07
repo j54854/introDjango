@@ -3,7 +3,7 @@
 <form action="{% url 'polls:login' %}" method="post">
 {% csrf_token %}
 {{ form.as_p }}
-<input type="submit" value="Login" />
+<input type="submit" value="Login">
 </form>
 
 <p>or <a href= "{% url 'polls:signup' %}">Sign Up</a></p>
