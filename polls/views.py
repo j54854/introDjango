@@ -31,13 +31,14 @@ def detail(request, question_id):
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    form = VoteForm(question=question)
 
     if request.method == 'POST':
         form = VoteForm(request.POST, question=question)
         if form.is_valid():
             form.save()
             return redirect('polls:results', question_id=question.id)
+    else:
+        form = VoteForm(question=question)
 
     context = {'question':question, 'form':form}
     return render(request, "polls/detail.html", context)
@@ -47,13 +48,14 @@ def detail(request, question_id):
 def detail(request, question_id):
     user = request.user
     question = get_object_or_404(Question, pk=question_id)
-    form = VoteForm(question=question)
 
     if request.method == 'POST':
         form = VoteForm(request.POST, question=question)
         if form.is_valid():
             form.save()
             return redirect('polls:results', question_id=question.id)
+    else:
+        form = VoteForm(question=question)
 
     context = {'user':user, 'question':question, 'form':form}
     return render(request, "polls/detail.html", context)
@@ -70,13 +72,13 @@ def results(request, question_id):
 
 
 def signup(request):
-    form = SignUpForm()
-
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('polls:index')
+    else:
+        form = SignUpForm()
 
     context = {'form':form}
     return render(request, 'polls/signup.html', context)
