@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # introDjango
 Qiita記事「Djangoのチュートリアル「初めてのDjango」シリーズ」のソースコード
 
@@ -11,3 +12,7 @@ Qiita記事「Djangoのチュートリアル「初めてのDjango」シリーズ
 
 
 
+=======
+# はじめてのDjango
+はじめてのDjango(1)〜(7)のソースコード．
+>>>>>>> refs/remotes/origin/master
