@@ -3,6 +3,32 @@ from .models import Question, Choice
 from django.contrib.auth.models import User
 
 
+"""
+class VoteForm(forms.Form):
+    CHOICES = [(ch.id, ch.choice_text) for ch in Choice.objects.all()]
+    # your_choice = forms.ChoiceField(choices = CHOICES)
+    your_choice = forms.ChoiceField(choices = CHOICES, widget=forms.RadioSelect())
+
+    def save(self):
+        choice_id = self.cleaned_data.get('your_choice')
+        selected_choice = Choice.objects.get(pk=choice_id)
+        selected_choice.votes += 1
+        selected_choice.save()
+
+class VoteForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.question = kwargs.pop('question')
+        super(VoteForm, self).__init__(*args, **kwargs)
+        CHOICES = [(ch.id, ch.choice_text) for ch in self.question.choice_set.all()]
+        self.fields['your_choice'] = forms.ChoiceField(choices = CHOICES, widget=forms.RadioSelect())
+
+    def save(self):
+        choice_id = self.cleaned_data.get('your_choice')
+        selected_choice = Choice.objects.get(pk=choice_id)
+        selected_choice.votes += 1
+        selected_choice.save()
+"""
+
 class VoteForm(forms.Form):
     new_option = forms.CharField(max_length=200, required=False)
 
@@ -18,7 +44,7 @@ class VoteForm(forms.Form):
         return int(your_choice)
 
     def clean(self):
-        super(VoteForm, self).clean()
+        cleaned_data = super(VoteForm, self).clean()
         choice_id = self.cleaned_data.get('your_choice')
         new_option = self.cleaned_data.get('new_option')
         if choice_id < 0:
@@ -38,42 +64,13 @@ class VoteForm(forms.Form):
             new_option = Choice(
                 question=self.question,
                 choice_text=self.cleaned_data.get('new_option'),
-                votes=0
+                votes=1
                 )
             new_option.save()
         else:
             selected_choice = Choice.objects.get(pk=choice_id)
             selected_choice.votes += 1
             selected_choice.save()
-
-"""
-class VoteForm(forms.Form):
-
-    def __init__(self, *args, **kwargs):
-        self.question = kwargs.pop('question')
-        super(VoteForm, self).__init__(*args, **kwargs)
-        CHOICES = [(ch.id, ch.choice_text) for ch in self.question.choice_set.all()]
-        self.fields['your_choice'] = forms.ChoiceField(choices = CHOICES, widget=forms.RadioSelect())
-
-    def save(self):
-        choice_id = self.cleaned_data.get('your_choice')
-        selected_choice = Choice.objects.get(pk=choice_id)
-        selected_choice.votes += 1
-        selected_choice.save()
-"""
-
-"""
-class VoteForm(forms.Form):
-    CHOICES = [(ch.id, ch.choice_text) for ch in Choice.objects.all()]
-#    your_choice = forms.ChoiceField(choices = CHOICES)
-    your_choice = forms.ChoiceField(choices = CHOICES, widget=forms.RadioSelect())
-
-    def save(self):
-        choice_id = self.cleaned_data.get('your_choice')
-        selected_choice = Choice.objects.get(pk=choice_id)
-        selected_choice.votes += 1
-        selected_choice.save()
-"""
 
 
 class SignUpForm(forms.Form):
